@@ -33,7 +33,7 @@ define(['module', 'ko-grid', toolbar], function (module, koGrid) {
 
         grid.data.source.streamValues(q => q.filteredBy(grid.data.predicate).sortedBy(grid.data.comparator))
             .then(values => values
-                .map(value=> '<tr>' + columns.map(c => '<td>' + valueSelector(value[c.property]) + '</td>').join('') + '</tr>')
+                .map(value=> '<tr>' + columns.map(c => '<td>' + valueSelector(c.property.indexOf('.') == -1 ? value[c.property] : eval('value.'+ c.property)) + '</td>').join('') + '</tr>')
                 .reduce((a, b) => a + b, ''))
             .then(data => {
                 var excelDocument = [
