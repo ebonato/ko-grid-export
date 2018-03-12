@@ -38,7 +38,7 @@ ko_grid_export_export = function (module, koGrid) {
     }).then(function (values) {
       return values.map(function (value) {
         return '<tr>' + columns.map(function (c) {
-          return '<td>' + valueSelector(value[c.property]) + '</td>';
+          return '<td>' + valueSelector(c.property.indexOf('.') == -1 ? value[c.property] : eval('value.' + c.property)) + '</td>';
         }).join('') + '</tr>';
       }).reduce(function (a, b) {
         return a + b;

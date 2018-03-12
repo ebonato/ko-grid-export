@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Ben Schulz
  * License: BSD 3-clause (http://opensource.org/licenses/BSD-3-Clause)
  */
-define(['onefold-dom', 'stringifyable', 'indexed-list', 'onefold-lists', 'onefold-js', 'ko-grid', 'ko-data-source', 'ko-indexed-repeat', 'knockout'],    function(onefold_dom, stringifyable, indexed_list, onefold_lists, onefold_js, ko_grid, ko_data_source, ko_indexed_repeat, knockout) {
+define(['onefold-dom', 'indexed-list', 'stringifyable', 'onefold-lists', 'onefold-js', 'ko-grid', 'ko-data-source', 'ko-indexed-repeat', 'knockout'],    function(onefold_dom, indexed_list, stringifyable, onefold_lists, onefold_js, ko_grid, ko_data_source, ko_indexed_repeat, knockout) {
 var ko_grid_export_export, ko_grid_export;
 
 var toolbar = 'ko-grid-toolbar';
@@ -33,7 +33,7 @@ ko_grid_export_export = function (module, koGrid) {
     }).then(function (values) {
       return values.map(function (value) {
         return '<tr>' + columns.map(function (c) {
-          return '<td>' + valueSelector(value[c.property]) + '</td>';
+          return '<td>' + valueSelector(c.property.indexOf('.') == -1 ? value[c.property] : eval('value.' + c.property)) + '</td>';
         }).join('') + '</tr>';
       }).reduce(function (a, b) {
         return a + b;
